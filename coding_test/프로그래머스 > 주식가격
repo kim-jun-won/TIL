@@ -1,0 +1,29 @@
+#include <string>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+vector<int> solution(vector<int> prices) {
+    stack<int> s;
+    int n = prices.size();
+    vector<int> answer(n);
+    
+    
+    for(int i=0; i<n; i++){
+        while(!s.empty() && s.top() > prices[i]){
+            int pre_index = s.top();
+            s.pop();
+            answer[pre_index] = i - pre_index;
+        }
+        s.push(i);
+    }
+    
+    while(!s.empty()){
+        int idx = s.top();
+        answer[idx] = n - 1 - idx;
+        s.pop();
+    }
+    
+    return answer;
+}
